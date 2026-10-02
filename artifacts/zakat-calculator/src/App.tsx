@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
-import { Banknote, Calculator, Gem, Landmark, Moon, ShieldCheck, Sparkles, Sun } from 'lucide-react';
+import { Banknote, Calculator, Eraser, Gem, Landmark, Moon, ShieldCheck, Sparkles, Sun } from 'lucide-react';
 
 type Language = 'en' | 'ar';
 type Basis = 'gold' | 'silver';
@@ -286,7 +286,9 @@ function App() {
             <button type="submit" className="calculate-btn" data-testid="button-calculate">
               <Calculator aria-hidden="true" />{t.calculate}
             </button>
-            <button type="button" className="clear-button" onClick={clear} data-testid="button-clear">{t.clear}</button>
+            <button type="button" className="clear-button" onClick={clear} data-testid="button-clear">
+              <Eraser aria-hidden="true" />{t.clear}
+            </button>
             {error && <div className="error-box" role="alert" data-testid="status-calculation-error">{error}</div>}
             {notice && <div className="notice-box" role="status" data-testid="status-calculation-notice">{notice}</div>}
           </form>
