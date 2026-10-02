@@ -239,7 +239,6 @@ function App() {
           <form className="panel form-panel" onSubmit={calculate} noValidate>
             <div className="panel-heading">
               <div><h2>{t.formTitle}</h2><p>{t.formSubtitle}</p></div>
-              <span className="step-mark" aria-hidden="true">01</span>
             </div>
 
             <section className="section-block" aria-labelledby="currency-heading">

@@ -504,7 +504,6 @@ button:focus-visible,input:focus-visible,select:focus-visible { outline:3px soli
 .panel-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding-bottom:19px; border-bottom:1px solid #e7e2d8; }
 .panel-heading h2 { margin:0; font-family:var(--app-font-serif); font-size:21px; letter-spacing:-.03em; color:#29483d; }
 .panel-heading p { margin:6px 0 0; color:#788279; font-size:13px; }
-.step-mark { display:grid; place-items:center; flex:0 0 34px; height:34px; border-radius:50%; color:#966d38; background:#f0e7d7; font-size:12px; font-weight:800; }
 .section-block { padding-top:21px; }
 .section-title { display:flex; align-items:center; gap:10px; margin:0 0 14px; color:#354e43; font-weight:700; font-size:14px; }
 .section-title svg { width:17px; height:17px; color:#a77a42; stroke-width:1.8; }
@@ -587,7 +586,6 @@ button:focus-visible,input:focus-visible,select:focus-visible { outline:3px soli
 .dark .panel-heading { border-color:#394a3e; }
 .dark .panel-heading h2 { color:#dce7dd; }
 .dark .panel-heading p { color:#aab7ac; }
-.dark .step-mark { color:#e1c58f; background:#344237; }
 .dark .section-title { color:#d2ddd3; }
 .dark .field label,.dark .field-label { color:#c5d1c7; }
 .dark .field-help { color:#a5b2a7; }
