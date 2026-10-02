@@ -16,7 +16,7 @@ const copy = {
   en: {
     pageTitle: 'Amanah | Zakat Calculator',
     metaDescription: 'Calculate your Zakat on eligible savings and precious metals in English or Arabic.',
-    brand: 'Amanah', nav: 'A clearer way to give', switchToDark: 'Switch to dark mode', switchToLight: 'Switch to light mode', eyebrow: 'A thoughtful guide to giving',
+    brand: 'Amanah', switchToDark: 'Switch to dark mode', switchToLight: 'Switch to light mode', eyebrow: 'A thoughtful guide to giving',
     title: 'Your Zakat, clearly understood.', intro: 'Bring your eligible savings and precious metals together. See whether they reach Nisab, and what 2.5% looks like for your household.',
     asideTitle: 'A personal calculation', aside: 'Enter the prices you want to use. Nothing is fetched or stored here except your language preference.',
     formTitle: 'Your yearly snapshot', formSubtitle: 'Use your current amounts and local market prices.', currencySection: 'Currency & market prices',
@@ -46,7 +46,7 @@ const copy = {
   ar: {
     pageTitle: 'أمانة | حاسبة الزكاة',
     metaDescription: 'احسب زكاة المدخرات المؤهلة والمعادن النفيسة بالعربية أو الإنجليزية.',
-    brand: 'أمانة', nav: 'طريقة أوضح للعطاء', switchToDark: 'التبديل إلى الوضع الداكن', switchToLight: 'التبديل إلى الوضع الفاتح', eyebrow: 'دليل متأنٍ للعطاء',
+    brand: 'أمانة', switchToDark: 'التبديل إلى الوضع الداكن', switchToLight: 'التبديل إلى الوضع الفاتح', eyebrow: 'دليل متأنٍ للعطاء',
     title: 'زكاتك، واضحة ومحسوبة.', intro: 'اجمع مدخراتك المؤهلة ومعادنك النفيسة. تعرّف على بلوغها النصاب ومقدار ٢٫٥٪ لأسرتك.',
     asideTitle: 'حساب شخصي', aside: 'أدخل الأسعار التي ترغب في اعتمادها. لا نجلب الأسعار أو نخزن بياناتك؛ الاستثناء الوحيد هو تفضيل اللغة.',
     formTitle: 'ملخص أموالك السنوي', formSubtitle: 'أدخل المبالغ الحالية وأسعار السوق المحلية.', currencySection: 'العملة وأسعار السوق',
@@ -192,7 +192,6 @@ function App() {
           <span>{t.brand}</span>
         </div>
         <div className="header-actions">
-          <span className="nav-note">{t.nav}</span>
           <button
             type="button"
             className="theme-toggle"
