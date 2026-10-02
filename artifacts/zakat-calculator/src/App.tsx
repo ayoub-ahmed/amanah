@@ -47,20 +47,20 @@ const copy = {
     pageTitle: 'أمانة | حاسبة الزكاة',
     metaDescription: 'احسب زكاة المدخرات المؤهلة والمعادن النفيسة بالعربية أو الإنجليزية.',
     brand: 'أمانة', switchToDark: 'التبديل إلى الوضع الداكن', switchToLight: 'التبديل إلى الوضع الفاتح', eyebrow: 'دليل متأنٍ للعطاء',
-    title: 'زكاتك، واضحة ومحسوبة.', intro: 'اجمع مدخراتك المؤهلة ومعادنك النفيسة. تعرّف على بلوغها النصاب ومقدار ٢٫٥٪ لأسرتك.',
+    title: 'زكاتك، واضحة ومحسوبة.', intro: 'اجمع مدخراتك المؤهلة ومعادنك النفيسة. تعرّف على بلوغها النصاب ومقدار 2.5% لأسرتك.',
     asideTitle: 'حساب شخصي', aside: 'أدخل الأسعار التي ترغب في اعتمادها. لا نجلب الأسعار أو نخزن بياناتك؛ الاستثناء الوحيد هو تفضيل اللغة.',
     formTitle: 'ملخص أموالك السنوي', formSubtitle: 'أدخل المبالغ الحالية وأسعار السوق المحلية.', currencySection: 'العملة وأسعار السوق',
     currencyLabel: 'عملة الحساب', currencyHelp: 'تُعرض جميع المبالغ وأسعار الغرام بهذه العملة.',
     goldPrice: 'سعر غرام الذهب', silverPrice: 'سعر غرام الفضة', priceHelp: 'أدخل السعر الذي تريد استخدامه. الأسعار لا تُحدَّث تلقائيًا.',
     assetsSection: 'الأموال المؤهلة للزكاة', goldWeight: 'وزن الذهب الذي تملكه', silverWeight: 'وزن الفضة التي تملكها',
-    weightHelp: 'الوزن بالغرام. اترك القيمة ٠ إن لم يوجد.', cash: 'النقد والمدخرات', cashHelp: 'أدرج النقد والمدخرات المتاحة التي تعدّها مؤهلة للزكاة.',
-    nisabLabel: 'حد النصاب', nisabBasis: 'أساس النصاب', goldBasis: 'الذهب · ٨٥ غ', silverBasis: 'الفضة · ٥٩٥ غ',
-    goldNisab: 'على أساس ٨٥ غرامًا من الذهب', silverNisab: 'على أساس ٥٩٥ غرامًا من الفضة', setPrice: 'أدخل سعر الغرام لحساب النصاب',
+    weightHelp: 'الوزن بالغرام. اترك القيمة 0 إن لم يوجد.', cash: 'النقد والمدخرات', cashHelp: 'أدرج النقد والمدخرات المتاحة التي تعدّها مؤهلة للزكاة.',
+    nisabLabel: 'حد النصاب', nisabBasis: 'أساس النصاب', goldBasis: 'الذهب · 85 غ', silverBasis: 'الفضة · 595 غ',
+    goldNisab: 'على أساس 85 غرامًا من الذهب', silverNisab: 'على أساس 595 غرامًا من الفضة', setPrice: 'أدخل سعر الغرام لحساب النصاب',
     yearQuestion: 'مرّ حول قمري على هذه الأموال', yearHelp: 'تجب الزكاة عند بلوغ الأموال المؤهلة النصاب ومرور حول قمري.',
     calculate: 'احسب زكاتي', resultKicker: 'نتيجة حسابك', resultTitle: 'صورة واضحة لعطائك.',
     resultIntro: 'أدخل أرقامك واضغط احسب لعرض ملخص الزكاة هنا.', zakatDue: 'الزكاة المستحقة', emptyAmount: '—',
     currencySuffix: 'بعملة', holdings: 'الأموال المؤهلة', nisabLine: 'حد النصاب', rate: 'نسبة الزكاة',
-    emptyStatus: 'ستظهر النتيجة هنا بعد إجراء الحساب.', statusDue: 'بلغت أموالك المؤهلة النصاب ومرّ عليها حول قمري. الزكاة المستحقة ٢٫٥٪.',
+    emptyStatus: 'ستظهر النتيجة هنا بعد إجراء الحساب.', statusDue: 'بلغت أموالك المؤهلة النصاب ومرّ عليها حول قمري. الزكاة المستحقة 2.5%.',
     statusNoYear: 'بلغت أموالك النصاب، لكنك أفدت بأن الحول القمري لم يمر بعد. لم تُحسب زكاة مستحقة.',
     statusBelow: 'الأموال المؤهلة أقل من حد النصاب المختار. لا تجب الزكاة وفق هذه الأرقام.',
     statusNeedPrice: 'أدخل سعر الغرام لأساس النصاب المحدد كي نحسب الحد.',
@@ -107,7 +107,11 @@ function App() {
   const selectedCurrency = currencies.find((item) => item.code === currency) ?? currencies[0];
   const selectedPrice = basis === 'gold' ? goldPrice : silverPrice;
   const nisab = useMemo(() => Number(selectedPrice) * (basis === 'gold' ? 85 : 595), [selectedPrice, basis]);
-  const formatter = useMemo(() => new Intl.NumberFormat(language === 'ar' ? 'ar' : 'en', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), [language]);
+  const formatter = useMemo(() => new Intl.NumberFormat(language === 'ar' ? 'ar' : 'en', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+    numberingSystem: 'latn',
+  }), [language]);
   const number = (value: number) => formatter.format(value);
 
   useEffect(() => {
