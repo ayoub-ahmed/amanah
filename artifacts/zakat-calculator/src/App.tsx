@@ -6,6 +6,7 @@ type Basis = 'gold' | 'silver';
 type Currency = { code: string; symbol: string };
 
 const currencies: Currency[] = [
+  { code: 'LYD', symbol: 'د.ل' },
   { code: 'USD', symbol: '$' }, { code: 'GBP', symbol: '£' }, { code: 'EUR', symbol: '€' },
   { code: 'CAD', symbol: 'CA$' }, { code: 'AUD', symbol: 'A$' }, { code: 'AED', symbol: 'د.إ' },
   { code: 'SAR', symbol: 'ر.س' }, { code: 'PKR', symbol: '₨' }, { code: 'INR', symbol: '₹' },
@@ -84,7 +85,7 @@ function App() {
       return 'en';
     }
   });
-  const [currency, setCurrency] = useState('USD');
+  const [currency, setCurrency] = useState('LYD');
   const [goldPrice, setGoldPrice] = useState('');
   const [silverPrice, setSilverPrice] = useState('');
   const [goldWeight, setGoldWeight] = useState('');

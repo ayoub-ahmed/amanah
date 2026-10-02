@@ -1,0 +1,1 @@
+- [Zakat currency](zakat-currency.md) — The calculator should default to LYD (Libyan dinar).
