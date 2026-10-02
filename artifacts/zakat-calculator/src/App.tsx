@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
-import { Banknote, Calculator, Gem, Landmark, ShieldCheck, Sparkles } from 'lucide-react';
+import { Banknote, Calculator, Gem, Landmark, Moon, ShieldCheck, Sparkles, Sun } from 'lucide-react';
 
 type Language = 'en' | 'ar';
 type Basis = 'gold' | 'silver';
@@ -16,7 +16,7 @@ const copy = {
   en: {
     pageTitle: 'Amanah | Zakat Calculator',
     metaDescription: 'Calculate your Zakat on eligible savings and precious metals in English or Arabic.',
-    brand: 'Amanah', nav: 'A clearer way to give', eyebrow: 'A thoughtful guide to giving',
+    brand: 'Amanah', nav: 'A clearer way to give', switchToDark: 'Switch to dark mode', switchToLight: 'Switch to light mode', eyebrow: 'A thoughtful guide to giving',
     title: 'Your Zakat, clearly understood.', intro: 'Bring your eligible savings and precious metals together. See whether they reach Nisab, and what 2.5% looks like for your household.',
     asideTitle: 'A personal calculation', aside: 'Enter the prices you want to use. Nothing is fetched or stored here except your language preference.',
     formTitle: 'Your yearly snapshot', formSubtitle: 'Use your current amounts and local market prices.', currencySection: 'Currency & market prices',
@@ -46,7 +46,7 @@ const copy = {
   ar: {
     pageTitle: 'أمانة | حاسبة الزكاة',
     metaDescription: 'احسب زكاة المدخرات المؤهلة والمعادن النفيسة بالعربية أو الإنجليزية.',
-    brand: 'أمانة', nav: 'طريقة أوضح للعطاء', eyebrow: 'دليل متأنٍ للعطاء',
+    brand: 'أمانة', nav: 'طريقة أوضح للعطاء', switchToDark: 'التبديل إلى الوضع الداكن', switchToLight: 'التبديل إلى الوضع الفاتح', eyebrow: 'دليل متأنٍ للعطاء',
     title: 'زكاتك، واضحة ومحسوبة.', intro: 'اجمع مدخراتك المؤهلة ومعادنك النفيسة. تعرّف على بلوغها النصاب ومقدار ٢٫٥٪ لأسرتك.',
     asideTitle: 'حساب شخصي', aside: 'أدخل الأسعار التي ترغب في اعتمادها. لا نجلب الأسعار أو نخزن بياناتك؛ الاستثناء الوحيد هو تفضيل اللغة.',
     formTitle: 'ملخص أموالك السنوي', formSubtitle: 'أدخل المبالغ الحالية وأسعار السوق المحلية.', currencySection: 'العملة وأسعار السوق',
@@ -85,6 +85,13 @@ function App() {
       return 'en';
     }
   });
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    try {
+      return localStorage.getItem('amanah-theme') === 'dark' ? 'dark' : 'light';
+    } catch {
+      return 'light';
+    }
+  });
   const [currency, setCurrency] = useState('LYD');
   const [goldPrice, setGoldPrice] = useState('');
   const [silverPrice, setSilverPrice] = useState('');
@@ -118,6 +125,15 @@ function App() {
       // The calculator remains usable if browser storage is unavailable.
     }
   }, [language]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    try {
+      localStorage.setItem('amanah-theme', theme);
+    } catch {
+      // The theme remains usable if browser storage is unavailable.
+    }
+  }, [theme]);
 
   const calculate = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -177,6 +193,17 @@ function App() {
         </div>
         <div className="header-actions">
           <span className="nav-note">{t.nav}</span>
+          <button
+            type="button"
+            className="theme-toggle"
+            aria-label={theme === 'dark' ? t.switchToLight : t.switchToDark}
+            title={theme === 'dark' ? t.switchToLight : t.switchToDark}
+            aria-pressed={theme === 'dark'}
+            onClick={() => setTheme((current) => current === 'dark' ? 'light' : 'dark')}
+            data-testid="button-theme-toggle"
+          >
+            {theme === 'dark' ? <Moon aria-hidden="true" /> : <Sun aria-hidden="true" />}
+          </button>
           <div className="language-toggle" aria-label={language === 'en' ? 'Language' : 'اللغة'}>
             <button type="button" className={language === 'ar' ? 'active' : ''} aria-pressed={language === 'ar'} onClick={() => setLanguage('ar')} data-testid="button-language-ar">العربية</button>
             <button type="button" className={language === 'en' ? 'active' : ''} aria-pressed={language === 'en'} onClick={() => setLanguage('en')} data-testid="button-language-en">English</button>
