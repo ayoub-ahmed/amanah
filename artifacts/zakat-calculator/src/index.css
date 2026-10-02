@@ -541,6 +541,7 @@ button:focus-visible,input:focus-visible,select:focus-visible { outline:3px soli
 .clear-button svg { width:16px; height:16px; flex:none; stroke-width:1.8; }
 .error-box { margin-top:12px; padding:12px 14px; border:1px solid #e6c7c0; border-radius:9px; color:#9a4038; background:#fbefeb; font-size:13px; line-height:1.5; }
 .notice-box { margin-top:12px; padding:11px 13px; border:1px solid #d6e1d7; border-radius:9px; color:#3d6650; background:#eff5ed; font-size:12px; line-height:1.5; }
+.notice-box.already-empty { border-color:#dfc77f; color:#6c592d; background:#f7f0dc; }
 .result-panel { position:sticky; top:20px; overflow:hidden; }
 .result-head { padding:25px 25px 21px; color:#f8f3e8; background:#285444; position:relative; }
 .result-head:after { content:''; position:absolute; width:170px; height:170px; border:1px solid rgba(255,255,255,.14); border-radius:50%; inset:auto -53px -98px auto; box-shadow:0 0 0 20px rgba(255,255,255,.025),0 0 0 41px rgba(255,255,255,.02); }
@@ -611,6 +612,7 @@ button:focus-visible,input:focus-visible,select:focus-visible { outline:3px soli
 .dark .clear-button:active { background:#364a3b; }
 .dark .error-box { border-color:#744b43; color:#ffd2c9; background:#3d2926; }
 .dark .notice-box { border-color:#45634b; color:#c6e2c5; background:#22382a; }
+.dark .notice-box.already-empty { border-color:#806b41; color:#ecd69b; background:#3a3222; }
 .dark .result-head { background:#214a39; }
 .dark .result-label { color:#afbbb0; }
 .dark .result-amount { color:#e1eade; }

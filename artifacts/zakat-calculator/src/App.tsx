@@ -40,6 +40,7 @@ const copy = {
     errorPrice: 'Enter a price per gram for the selected Nisab basis before calculating.',
     errorCurrency: 'Choose a currency for your calculation.',
     clear: 'Clear amounts', cleared: 'Amounts cleared. Enter your figures to begin again.',
+    alreadyEmpty: 'The amount fields are already empty. Enter a value to begin.',
     footer: 'A considered tool for a meaningful act.', localOnly: 'Your figures stay in this browser.',
     metalsHelp: 'Precious metals are valued using the prices you entered above.',
   },
@@ -70,6 +71,7 @@ const copy = {
     errorPrice: 'أدخل سعر الغرام لأساس النصاب المحدد قبل إجراء الحساب.',
     errorCurrency: 'اختر عملة لإجراء الحساب.',
     clear: 'مسح المبالغ', cleared: 'تم مسح المبالغ. أدخل أرقامك للبدء من جديد.',
+    alreadyEmpty: 'حقول المبالغ فارغة بالفعل. أدخل قيمة للبدء.',
     footer: 'أداة متأنية لفريضة ذات معنى.', localOnly: 'تبقى أرقامك في هذا المتصفح.',
     metalsHelp: 'تُقيّم المعادن النفيسة وفق الأسعار التي أدخلتها أعلاه.',
   },
@@ -103,6 +105,7 @@ function App() {
   const [result, setResult] = useState<Results | null>(null);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [noticeKind, setNoticeKind] = useState<'cleared' | 'already-empty' | null>(null);
   const t = copy[language];
   const selectedCurrency = currencies.find((item) => item.code === currency) ?? currencies[0];
   const selectedPrice = basis === 'gold' ? goldPrice : silverPrice;
@@ -143,6 +146,7 @@ function App() {
     event.preventDefault();
     setError('');
     setNotice('');
+    setNoticeKind(null);
     const raw = [goldPrice, silverPrice, goldWeight, silverWeight, cash];
     const values = raw.map((value) => value.trim() === '' ? 0 : Number(value));
     if (values.some((value) => !Number.isFinite(value) || value < 0)) {
@@ -167,8 +171,12 @@ function App() {
   };
 
   const clear = () => {
+    const alreadyEmpty = [goldPrice, silverPrice, goldWeight, silverWeight, cash]
+      .every((value) => value.trim() === '');
     setGoldPrice(''); setSilverPrice(''); setGoldWeight(''); setSilverWeight(''); setCash('');
-    setYearPassed(false); setResult(null); setError(''); setNotice(t.cleared);
+    setYearPassed(false); setResult(null); setError('');
+    setNoticeKind(alreadyEmpty ? 'already-empty' : 'cleared');
+    setNotice(alreadyEmpty ? t.alreadyEmpty : t.cleared);
   };
 
   const status = !result
@@ -181,7 +189,7 @@ function App() {
     <div className="field">
       <label htmlFor={id}>{label}</label>
       <div className="input-wrap">
-        <input id={id} data-testid={`input-${id}`} type="number" inputMode="decimal" min="0" step="any" value={value} placeholder={placeholder} onChange={(event) => { onChange(event.target.value); setNotice(''); setError(''); setResult(null); }} aria-describedby={`${id}-help`} />
+        <input id={id} data-testid={`input-${id}`} type="number" inputMode="decimal" min="0" step="any" value={value} placeholder={placeholder} onChange={(event) => { onChange(event.target.value); setNotice(''); setNoticeKind(null); setError(''); setResult(null); }} aria-describedby={`${id}-help`} />
         {suffix && <span className="input-suffix">{suffix}</span>}
       </div>
       <span className="field-help" id={`${id}-help`}>{help}</span>
@@ -290,7 +298,7 @@ function App() {
               <Eraser aria-hidden="true" />{t.clear}
             </button>
             {error && <div className="error-box" role="alert" data-testid="status-calculation-error">{error}</div>}
-            {notice && <div className="notice-box" role="status" data-testid="status-calculation-notice">{notice}</div>}
+            {notice && <div className={`notice-box${noticeKind === 'already-empty' ? ' already-empty' : ''}`} role="status" data-testid="status-calculation-notice">{notice}</div>}
           </form>
 
           <section className="panel result-panel" aria-labelledby="result-heading" aria-live="polite" data-testid="card-calculation-result">
